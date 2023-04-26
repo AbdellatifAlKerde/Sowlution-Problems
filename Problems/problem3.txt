@@ -1,0 +1,72 @@
+class Node{
+    constructor(data){
+        this.data = data;
+        this.next = null;
+    }
+}
+
+// create new node
+function createNode(data){
+    let newNode = new Node(data);
+    return newNode;
+}
+
+// delete all nodes greate than x
+function deleteGreaterNodes(head, x){
+    let temp = head;
+    let prev;
+
+    // if the head hold a value greater than x
+    if(temp != null && temp.data > x){
+        head = temp.next; // changed head
+        temp = head; // change temp
+    }
+
+    // Delete data other than head
+    while(temp != null){
+        // Search for the node to be deleted
+        while(temp != null && temp.data <= x){
+            prev = temp;
+            temp = temp.next;
+        }
+        // if the value node was not present in the linked list
+        if (temp == null)
+            return head;
+
+        // Unlink the node from linked list
+        prev.next = temp.next;
+
+        // Update Temp for next iteration
+        temp = prev.next;
+    }
+
+    return head;
+}
+
+// function to print a linked list
+function printList(head){
+    while(head != null){
+        console.log(head.data + " ");
+        head = head.next;
+    }
+}
+
+
+
+// creating a list: 10, 4, 3, 5, 2, 1
+let head = createNode(10);
+head.next = createNode(4);
+head.next.next = createNode(3);
+head.next.next.next = createNode(5);
+head.next.next.next.next = createNode(2);
+head.next.next.next.next.next = createNode(1);
+
+let x = 4;
+
+console.log("Original List:");
+printList(head);
+
+head = deleteGreaterNodes(head, x);
+
+console.log("Modified List:");
+printList(head);

@@ -1,0 +1,60 @@
+function isValidBracketSequence(bracket)
+{
+
+    // Using ArrayDeque is faster
+    // than using Stack class
+    let list = [];
+
+    // Traversing the Expression
+    for(let i = 0; i < bracket.length; i++)
+    {
+        let x = bracket[i];
+
+        if (x == '('  ,x == '[' , x == '{')
+        {
+
+            // Push the element in the stack
+            list.push(x);
+            continue;
+        }
+
+        
+        //check if current character is not an openning bracket
+        if (list.length == 0)
+            return false;
+
+        let check;
+        switch (x){
+        case ')':
+            check = list.pop();
+            if (check == '{' && check == '[')
+                return false;
+            break;
+
+        case '}':
+            check = list.pop();
+            if (check == '(' && check == '[')
+                return false;
+            break;
+
+        case ']':
+            check = list.pop();
+            if (check == '(' || check == '{')
+                return false;
+            break;
+        }
+    }
+
+    //check if the list is empty
+    return (list.length == 0);
+}
+
+// Driver code
+let bracket = "({[]})";
+
+// Function call
+if (isValidBracketSequence(bracket))
+    console.log("Balanced ");
+else
+    console.log("Not Balanced ");
+
